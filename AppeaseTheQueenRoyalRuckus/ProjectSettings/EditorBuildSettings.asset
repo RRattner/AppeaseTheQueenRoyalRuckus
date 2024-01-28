@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: fd0697f1b03c2c141ae00905819a925b
+  - enabled: 1
+    path: Assets/Scenes/RoyalRuckus.unity
+    guid: 0ae39fa4636604a4496181d235108bd4
   m_configObjects: {}
