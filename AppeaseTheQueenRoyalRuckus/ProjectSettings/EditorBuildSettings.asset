@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Credits.unity
     guid: c3a405ad9517e8a4f88a33d534cfbff7
+  - enabled: 1
+    path: Assets/Scenes/RoyalRuckusFinalForReal2.unity
+    guid: f84934a1020d7164abed97cb35f1564b
   m_configObjects: {}
