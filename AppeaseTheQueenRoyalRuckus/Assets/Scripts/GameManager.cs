@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
                 dialogueActive = false;
             }
         }
+
     }
 
     public void updateScore(int addedScore) {
