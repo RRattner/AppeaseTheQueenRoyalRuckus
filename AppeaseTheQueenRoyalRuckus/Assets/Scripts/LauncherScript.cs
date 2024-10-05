@@ -64,5 +64,9 @@ public class LauncherScript : MonoBehaviour
             createdPinball = null;
         }
     }
+
+    public void newAttempt() {
+        pinballLaunched = false;
+    }
     
 }

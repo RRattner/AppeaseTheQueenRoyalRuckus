@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class PinballDestroy : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] private GameObject myGameManager;
     void Start()
     {
         
@@ -19,8 +20,9 @@ public class PinballDestroy : MonoBehaviour
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Pinball"))
         {
+            myGameManager.GetComponent<GameManager>().resetPinball();
             print("Ball Detected.\n");
-            SceneManager.LoadScene("Menu");
+            //SceneManager.LoadScene("Menu");
         }
     }
 }
