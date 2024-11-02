@@ -7,10 +7,12 @@ public class LauncherDoorScript : MonoBehaviour
 {
     [SerializeField] private GameObject launcherDoor;
     [SerializeField] private GameObject myManager;
+
+    private bool pinballInPlay;
     // Start is called before the first frame update
     void Start()
     {
-        
+        pinballInPlay = false;
     }
 
     // Update is called once per frame
@@ -20,7 +22,7 @@ public class LauncherDoorScript : MonoBehaviour
     }
 
     public void OnTriggerEnter(Collider collided) {
-        if(collided.gameObject.tag == "Pinball") {
+        if(collided.gameObject.tag == "Pinball" && !pinballInPlay) {
             shutLauncherDoor();
             myManager.GetComponent<GameManager>().reduceNumAttempts(1);
         }
@@ -28,8 +30,10 @@ public class LauncherDoorScript : MonoBehaviour
 
     public void shutLauncherDoor() {
         launcherDoor.SetActive(true);
+        pinballInPlay = true;
     }
     public void openLauncherDoor() {
         launcherDoor.SetActive(false);
+        pinballInPlay = false;
     }
 }

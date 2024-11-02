@@ -20,6 +20,7 @@ public class PinballDestroy : MonoBehaviour
     void OnCollisionEnter(Collision other) {
         if (other.gameObject.CompareTag("Pinball"))
         {
+            Destroy(other.gameObject);
             myGameManager.GetComponent<GameManager>().resetPinball();
             print("Ball Detected.\n");
             //SceneManager.LoadScene("Menu");
