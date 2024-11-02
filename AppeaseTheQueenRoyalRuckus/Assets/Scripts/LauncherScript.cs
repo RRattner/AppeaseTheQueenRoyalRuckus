@@ -68,5 +68,10 @@ public class LauncherScript : MonoBehaviour
     public void newAttempt() {
         pinballLaunched = false;
     }
+
+    //Used when loading in from a sublevel
+    public void manualSetPinballLaunched() {
+        pinballLaunched = true;
+    }
     
 }

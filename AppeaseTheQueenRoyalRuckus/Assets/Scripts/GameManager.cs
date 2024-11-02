@@ -105,15 +105,11 @@ public class GameManager : MonoBehaviour
         //numAttempts--;
         //updateNumAttempts();
         if(numAttempts <= 0) {
-            print("Got here 0.\n");
             SceneManager.LoadScene(gameOverScene);
         }
         else {
-            print("Got here 1.\n");
             myLauncher.GetComponent<LauncherScript>().newAttempt();
-            print("Got here 2.\n");
             myLauncherDoor.GetComponent<LauncherDoorScript>().openLauncherDoor();
-            print("Got here 3.\n");
         }
     }
 
@@ -131,6 +127,12 @@ public class GameManager : MonoBehaviour
         numAttempts += addition;
 
         updateNumAttempts();
+    }
+    public int returnScore() {
+        return score;
+    }
+    public int returnNumAttempts() {
+        return numAttempts;
     }
 
 }
