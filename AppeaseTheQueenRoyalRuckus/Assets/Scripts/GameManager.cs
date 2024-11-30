@@ -8,7 +8,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private int score;
+    [SerializeField] private GameObject myGameDataTracker;
+    private int score;
+    private int numAttempts;
     [SerializeField] private TMP_Text scoreText;
 
     [SerializeField] private TMP_Text numAttemptsText;
@@ -32,15 +34,26 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float dialogueUptime;
     private float dialogueStart;
     private float dialogueEnd;
-
-    [SerializeField] private int numAttempts;
     [SerializeField] private GameObject myLauncher;
     [SerializeField] private GameObject myLauncherDoor;
     [SerializeField] private string gameOverScene;
+    [SerializeField] private GameObject[] subLevelPortals;
 
+    
     void Start()
     {
-        score = 0;
+        myGameDataTracker = GameObject.FindGameObjectsWithTag("InterSceneData")[0];
+        score = myGameDataTracker.GetComponent<GameDataTracker>().getScore();
+        numAttempts = myGameDataTracker.GetComponent<GameDataTracker>().getAttempts();
+        //Set correct sublevels to open up on scene load
+        for(int i = 0; i< subLevelPortals.Length; i++) {
+            if(myGameDataTracker.GetComponent<GameDataTracker>().checkSublevelOpen(i) && !myGameDataTracker.GetComponent<GameDataTracker>().checkSublevelComplete(i)) {
+                subLevelPortals[i].SetActive(true);
+            }
+            else {
+                subLevelPortals[i].SetActive(false);
+            }
+        }
         queen1Active = true;
         queen2Active = false;
         queen3Active = false;
@@ -50,6 +63,7 @@ public class GameManager : MonoBehaviour
         dialogueStart = 0;
         dialogueEnd = 0;
         updateNumAttempts();
+        updateScore(0);
     }
 
     // Update is called once per frame
@@ -68,6 +82,7 @@ public class GameManager : MonoBehaviour
     public void updateScore(int addedScore) {
         score += addedScore;
         scoreText.text = "Score: "+score;
+        myGameDataTracker.GetComponent<GameDataTracker>().updateScore(score);
         if(queen1Active && score >= scoreThreshhold1) {
             queen1Active = false;
             queen2Active = true;
@@ -104,12 +119,16 @@ public class GameManager : MonoBehaviour
     public void resetPinball () {
         //numAttempts--;
         //updateNumAttempts();
+        reduceNumAttempts(1);
         if(numAttempts <= 0) {
             SceneManager.LoadScene(gameOverScene);
+            //Should remove the game data when game has ended for clean slate
+            Destroy(myGameDataTracker);
         }
         else {
             myLauncher.GetComponent<LauncherScript>().newAttempt();
             myLauncherDoor.GetComponent<LauncherDoorScript>().openLauncherDoor();
+            myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
         }
     }
 

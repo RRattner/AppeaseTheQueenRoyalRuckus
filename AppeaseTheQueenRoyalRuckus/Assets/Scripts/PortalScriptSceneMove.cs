@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PortalScript : MonoBehaviour
+public class PortalScriptSceneMove : MonoBehaviour
 {
     // Start is called before the first frame update
     private bool portalResolved;
     private GameObject myGameDataTracker;
     [SerializeField] private int portalIndex;
-    [SerializeField] private Vector3 newPinballLoc;
-    [SerializeField] private Vector3 newCameraLoc;
-    [SerializeField] private GameObject myCamera;
+    [SerializeField] private string levelName;
     void Start()
     {
         myGameDataTracker = GameObject.FindGameObjectsWithTag("InterSceneData")[0];
@@ -31,9 +30,8 @@ public class PortalScript : MonoBehaviour
         
     }
     public void OnTriggerEnter(Collider collided) {
-        if(collided.gameObject.tag == "Pinball" && !portalResolved && collided.gameObject.GetComponent<PinballScript>().AbleToEnter()) {
-            collided.gameObject.transform.position = newPinballLoc;
-            myCamera.gameObject.transform.position = newCameraLoc;
+        if(collided.gameObject.tag == "Pinball" /**&& !portalResolved && collided.gameObject.GetComponent<PinballScript>().AbleToEnter()**/) {
+            SceneManager.LoadScene(levelName);
         }
     }
 

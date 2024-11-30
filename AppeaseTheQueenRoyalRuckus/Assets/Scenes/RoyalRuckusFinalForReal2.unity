@@ -16415,6 +16415,54 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &276193700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276193702}
+  - component: {fileID: 276193701}
+  m_Layer: 0
+  m_Name: GameData
+  m_TagString: InterSceneData
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &276193701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276193700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 057c6ae659720544db0275a12827853b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Score: 0
+  Attempts: 2
+  SublevelsOpen: 01
+  SublevelsCompleted: 00
+--- !u!4 &276193702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276193700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 209.94037, y: 36.76816, z: 1654.9138}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &286885308
 GameObject:
   m_ObjectHideFlags: 0
@@ -16457,7 +16505,6 @@ Transform:
   - {fileID: 8411568}
   - {fileID: 1937662180}
   - {fileID: 1838336820}
-  - {fileID: 1040414251}
   - {fileID: 2011547248}
   - {fileID: 335095173}
   - {fileID: 877611053}
@@ -29709,7 +29756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0447e1c2149d284b85c9c70027417e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EntryPortal: {fileID: 1529879056}
+  entryPortalIndex: 0
 --- !u!4 &964083487 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7424043793597320374, guid: 256c0f489d30c4040bb392579993672a, type: 3}
@@ -30100,7 +30147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e645187a06fd64a458a68ab7b4038812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: 0
+  myGameDataTracker: {fileID: 0}
   scoreText: {fileID: 1521587274}
   numAttemptsText: {fileID: 1760011069}
   scoreThreshhold1: 50
@@ -30127,10 +30174,11 @@ MonoBehaviour:
   - '*#@#&$#@!'
   dialogueText: {fileID: 1687809720}
   dialogueUptime: 2
-  numAttempts: 100
   myLauncher: {fileID: 1840942207}
   myLauncherDoor: {fileID: 527290309}
   gameOverScene: Menu
+  subLevelPortals:
+  - {fileID: 1529879056}
 --- !u!4 &1040414251
 Transform:
   m_ObjectHideFlags: 0
@@ -30144,7 +30192,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 286885309}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1045472509 stripped
 GameObject:
@@ -41757,7 +41805,7 @@ GameObject:
   - component: {fileID: 1529879060}
   - component: {fileID: 1529879059}
   - component: {fileID: 1529879058}
-  - component: {fileID: 1529879057}
+  - component: {fileID: 1529879062}
   m_Layer: 0
   m_Name: Area1Portal
   m_TagString: Untagged
@@ -41765,21 +41813,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1529879057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1529879056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48abd6bc5f6f7134baed746d1d8da1b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  newPinballLoc: {x: -275.59, y: 18.9475, z: 4.31552}
-  newCameraLoc: {x: -274.3777, y: 22, z: -14.12}
-  myCamera: {fileID: 208645614}
 --- !u!135 &1529879058
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -41860,12 +41893,26 @@ Transform:
   m_GameObject: {fileID: 1529879056}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 202.9943, y: 36.442505, z: -25.959522}
+  m_LocalPosition: {x: 202.9943, y: 28.6, z: -25.959522}
   m_LocalScale: {x: 2.625, y: 2.6859195, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 286885309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1529879062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529879056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b662b666f98a94aa13a4adf78444d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  portalIndex: 0
+  levelName: RoyalRuckusAltZone1
 --- !u!1001 &1537229326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50419,5 +50466,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1463402788}
+  - {fileID: 1040414251}
   - {fileID: 286885309}
   - {fileID: 1960473765}
+  - {fileID: 276193702}

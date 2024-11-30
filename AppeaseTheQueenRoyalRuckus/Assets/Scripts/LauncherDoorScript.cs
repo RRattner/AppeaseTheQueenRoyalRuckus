@@ -24,7 +24,6 @@ public class LauncherDoorScript : MonoBehaviour
     public void OnTriggerEnter(Collider collided) {
         if(collided.gameObject.tag == "Pinball" && !pinballInPlay) {
             shutLauncherDoor();
-            myManager.GetComponent<GameManager>().reduceNumAttempts(1);
         }
     }
 
