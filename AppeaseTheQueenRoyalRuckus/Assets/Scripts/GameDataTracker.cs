@@ -1,25 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameDataTracker : MonoBehaviour
 {
-    public static GameDataTracker Instance;
     [SerializeField] private int Score;
     [SerializeField] private int Attempts;
     [SerializeField] private bool[] SublevelsOpen;
     [SerializeField] private bool[] SublevelsCompleted;
+    [SerializeField] private string InitLevelName;
+
+
+    [SerializeField] private GameObject myUIManager;
     // Start is called before the first frame update
-    
     void Awake() {
-    //Should allow for persistant game manager across levels without needing to do special tricks to save game state data
-        if(Instance == null) {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else {
-            Destroy(gameObject);
-        }
+        SceneManager.LoadScene(InitLevelName, LoadSceneMode.Additive);
     }
     void Start()
     {
@@ -34,9 +30,11 @@ public class GameDataTracker : MonoBehaviour
 
     public void updateScore(int myScore) {
         Score = myScore;
+        myUIManager.GetComponent<UIManagerScript>().updateScoreText(myScore);
     }
     public void updateAttempts(int myAttempts) {
         Attempts = myAttempts;
+        myUIManager.GetComponent<UIManagerScript>().updateNumAttemptsText(myAttempts);
     }
     public void updateSublevelsOpen(int sublevelIndex) {
             SublevelsOpen[sublevelIndex] = true;

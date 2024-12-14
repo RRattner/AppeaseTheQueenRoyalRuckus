@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+
+  [SerializeField] private string ManagerScene;
   public void PlayGame()
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        SceneManager.LoadScene("RoyalRuckusFinalForReal2");
+        SceneManager.LoadScene(ManagerScene);
     }
 }

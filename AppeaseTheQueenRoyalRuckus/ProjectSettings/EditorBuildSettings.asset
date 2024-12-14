@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/RoyalRuckusAltZone1.unity
     guid: 4ebbe23a348ab16499a2e22c8f73a08a
+  - enabled: 1
+    path: Assets/Scenes/DataAndUI.unity
+    guid: 420a596735df37e4e85972bfd9bda14b
   m_configObjects: {}

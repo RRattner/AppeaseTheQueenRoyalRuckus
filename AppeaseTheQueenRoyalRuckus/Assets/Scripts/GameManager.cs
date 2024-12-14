@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,9 +12,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject myGameDataTracker;
     private int score;
     private int numAttempts;
-    [SerializeField] private TMP_Text scoreText;
-
-    [SerializeField] private TMP_Text numAttemptsText;
     [SerializeField] private int scoreThreshhold1;
     [SerializeField] private int scoreThreshhold2;
 
@@ -54,6 +52,7 @@ public class GameManager : MonoBehaviour
                 subLevelPortals[i].SetActive(false);
             }
         }
+        /**
         queen1Active = true;
         queen2Active = false;
         queen3Active = false;
@@ -62,7 +61,8 @@ public class GameManager : MonoBehaviour
         dialogueActive = false;
         dialogueStart = 0;
         dialogueEnd = 0;
-        updateNumAttempts();
+        **/
+        myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
         updateScore(0);
     }
 
@@ -81,8 +81,8 @@ public class GameManager : MonoBehaviour
 
     public void updateScore(int addedScore) {
         score += addedScore;
-        scoreText.text = "Score: "+score;
         myGameDataTracker.GetComponent<GameDataTracker>().updateScore(score);
+        /**
         if(queen1Active && score >= scoreThreshhold1) {
             queen1Active = false;
             queen2Active = true;
@@ -96,10 +96,11 @@ public class GameManager : MonoBehaviour
             queenState3.enabled = true;
             updateDialoguePositive();
         }
+        **/
     }
 
     public void updateDialoguePositive() {
-        int selectedDialogue = (int)Random.Range(0, posStatements.Length);
+        int selectedDialogue = (int)UnityEngine.Random.Range(0, posStatements.Length); //Consider different method of randomization
         dialogueText.text = posStatements[selectedDialogue];
         dialogueActive = true;
         dialogueStart = Time.time;
@@ -108,7 +109,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void updateDialogueNeutral() {
-        int selectedDialogue = (int)Random.Range(0, neutralStatements.Length);
+        int selectedDialogue = (int)UnityEngine.Random.Range(0, neutralStatements.Length); //Consider different method of randomization
         dialogueText.text = neutralStatements[selectedDialogue];
         dialogueActive = true;
         dialogueStart = Time.time;
@@ -132,20 +133,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void updateNumAttempts() {
-        numAttemptsText.text = "Attempts: " + numAttempts;
-    }
     public void reduceNumAttempts(int reduction) {
         numAttempts -= reduction;
         if (numAttempts < 0) {
             numAttempts = 0;
         }
-        updateNumAttempts();
+        myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
     }
     public void addNumAttempts(int addition) {
         numAttempts += addition;
 
-        updateNumAttempts();
+        myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
     }
     public int returnScore() {
         return score;
