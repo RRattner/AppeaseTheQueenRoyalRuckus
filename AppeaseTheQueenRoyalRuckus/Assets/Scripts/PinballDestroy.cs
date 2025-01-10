@@ -21,7 +21,8 @@ public class PinballDestroy : MonoBehaviour
         if (other.gameObject.CompareTag("Pinball"))
         {
             Destroy(other.gameObject);
-            myGameManager.GetComponent<GameManager>().resetPinball();
+            //Reset pinball set to false because this method is used when pinball is lost due to hitting the gutter, not due to the level being reset
+            myGameManager.GetComponent<GameManager>().resetPinball(false);
             print("Ball Detected.\n");
             //SceneManager.LoadScene("Menu");
         }

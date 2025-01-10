@@ -9,6 +9,8 @@ TagManager:
   - UIElements
   - UIScore
   - UIAttempts
+  - MainLevelRoot
+  - SubLevel1Root
   layers:
   - Default
   - TransparentFX

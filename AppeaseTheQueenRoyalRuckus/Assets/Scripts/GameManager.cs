@@ -36,17 +36,57 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject myLauncherDoor;
     [SerializeField] private string gameOverScene;
     [SerializeField] private GameObject[] subLevelPortals;
+    [SerializeField] private String[] subLevelSceneNames;
+
+    [SerializeField] private GameObject[] paddles;
+    private Transform[] paddleTransforms;
+
+    private HingeJoint[] paddleHinges;
 
     
     void Start()
     {
         myGameDataTracker = GameObject.FindGameObjectsWithTag("InterSceneData")[0];
+        paddleTransforms = new Transform[paddles.Length];
+        paddleHinges = new HingeJoint[paddles.Length];
+        for(int i = 0; i < paddles.Length; i++) {
+            paddleTransforms[i] = paddles[i].transform;
+            paddleHinges[i] = paddles[i].GetComponent<HingeJoint>();
+        }
+        updateGameData();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(dialogueActive) {
+            if(Time.time > dialogueEnd) {
+                print("Ending dialogue.\n");
+                dialogueBox.SetActive(false);
+                dialogueActive = false;
+            }
+        }
+
+    }
+    //Using IEnumerator to make sure that scene is fully loaded before being hidden
+    IEnumerator FullyLoadAdditiveScene(int sceneIndex){
+        SceneManager.LoadScene(subLevelSceneNames[sceneIndex], LoadSceneMode.Additive);
+        yield return new WaitUntil(()=>SceneManager.GetSceneByName(subLevelSceneNames[sceneIndex]).isLoaded);
+        myGameDataTracker.GetComponent<GameDataTracker>().updateSublevelsOpen(sceneIndex);
+    }
+
+    public void updateGameData() {
         score = myGameDataTracker.GetComponent<GameDataTracker>().getScore();
+        print("Current score is: "+score+"\n");
         numAttempts = myGameDataTracker.GetComponent<GameDataTracker>().getAttempts();
         //Set correct sublevels to open up on scene load
+        
         for(int i = 0; i< subLevelPortals.Length; i++) {
             if(myGameDataTracker.GetComponent<GameDataTracker>().checkSublevelOpen(i) && !myGameDataTracker.GetComponent<GameDataTracker>().checkSublevelComplete(i)) {
                 subLevelPortals[i].SetActive(true);
+                if( !SceneManager.GetSceneByName(subLevelSceneNames[i]).isLoaded) {
+                    StartCoroutine(FullyLoadAdditiveScene(i));
+                }
             }
             else {
                 subLevelPortals[i].SetActive(false);
@@ -64,21 +104,13 @@ public class GameManager : MonoBehaviour
         **/
         myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
         updateScore(0);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(dialogueActive) {
-            if(Time.time > dialogueEnd) {
-                print("Ending dialogue.\n");
-                dialogueBox.SetActive(false);
-                dialogueActive = false;
-            }
+        //Reset paddles to correct positions
+        for(int i = 0; i < paddles.Length; i++) {
+            paddles[i].transform.localRotation = paddleTransforms[i].localRotation;
+            paddles[i].transform.position = paddleTransforms[i].position;
+            paddles[i].GetComponent<HingeJoint>().axis = paddleHinges[i].axis;  
         }
-
     }
-
     public void updateScore(int addedScore) {
         score += addedScore;
         myGameDataTracker.GetComponent<GameDataTracker>().updateScore(score);
@@ -117,20 +149,18 @@ public class GameManager : MonoBehaviour
         dialogueBox.SetActive(true);
     }
 
-    public void resetPinball () {
-        //numAttempts--;
-        //updateNumAttempts();
-        reduceNumAttempts(1);
-        if(numAttempts <= 0) {
-            SceneManager.LoadScene(gameOverScene);
-            //Should remove the game data when game has ended for clean slate
-            Destroy(myGameDataTracker);
+    public void resetPinball (bool levelReset) {
+        if(!levelReset) {
+            reduceNumAttempts(1);
+            if(numAttempts <= 0) {
+                SceneManager.LoadScene(gameOverScene);
+                //Should remove the game data when game has ended for clean slate
+                Destroy(myGameDataTracker);
+            }
         }
-        else {
-            myLauncher.GetComponent<LauncherScript>().newAttempt();
-            myLauncherDoor.GetComponent<LauncherDoorScript>().openLauncherDoor();
-            myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
-        }
+        myLauncher.GetComponent<LauncherScript>().newAttempt();
+        myLauncherDoor.GetComponent<LauncherDoorScript>().openLauncherDoor();
+        myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
     }
 
     public void reduceNumAttempts(int reduction) {

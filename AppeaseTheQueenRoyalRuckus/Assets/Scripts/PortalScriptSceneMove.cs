@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,7 @@ public class PortalScriptSceneMove : MonoBehaviour
     private bool portalResolved;
     private GameObject myGameDataTracker;
     [SerializeField] private int portalIndex;
-    [SerializeField] private string levelName;
+    [SerializeField] private GameObject myGameManager;
     void Start()
     {
         myGameDataTracker = GameObject.FindGameObjectsWithTag("InterSceneData")[0];
@@ -31,7 +32,13 @@ public class PortalScriptSceneMove : MonoBehaviour
     }
     public void OnTriggerEnter(Collider collided) {
         if(collided.gameObject.tag == "Pinball" /**&& !portalResolved && collided.gameObject.GetComponent<PinballScript>().AbleToEnter()**/) {
-            SceneManager.LoadScene(levelName);
+            //Remove the existing pinball and reset its level
+            myGameManager.GetComponent<GameManager>().resetPinball(true);
+            Destroy(collided.gameObject);
+            //Activate the level being entered
+            myGameDataTracker.GetComponent<GameDataTracker>().toggleLevel(true, portalIndex);
+
+
         }
     }
 

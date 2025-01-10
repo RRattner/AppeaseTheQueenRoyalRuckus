@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class LoadMainScene : MonoBehaviour
 {
     // Start is called before the first frame update
-    [SerializeField] private String mainSceneName;
+    private GameObject myGameDataTracker;
+    [SerializeField] private int portalIndex;
+    [SerializeField] private GameObject myGameManager;
     void Start()
     {
-        
+        myGameDataTracker = GameObject.FindGameObjectsWithTag("InterSceneData")[0];
     }
 
     // Update is called once per frame
@@ -22,7 +24,9 @@ public class LoadMainScene : MonoBehaviour
     public void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Pinball") {
             Destroy(other.gameObject);
-            SceneManager.LoadScene(mainSceneName);
+            //SceneManager.LoadScene(mainSceneName);
+            myGameManager.GetComponent<GameManager>().resetPinball(true);
+            myGameDataTracker.GetComponent<GameDataTracker>().toggleLevel(false, portalIndex);
         }
     }
 }

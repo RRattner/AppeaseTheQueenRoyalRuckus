@@ -31,10 +31,12 @@ public class PortalScript : MonoBehaviour
         
     }
     public void OnTriggerEnter(Collider collided) {
+        /**
         if(collided.gameObject.tag == "Pinball" && !portalResolved && collided.gameObject.GetComponent<PinballScript>().AbleToEnter()) {
             collided.gameObject.transform.position = newPinballLoc;
             myCamera.gameObject.transform.position = newCameraLoc;
         }
+        **/
     }
 
     //Checking to make sure portal resolution script functions as intended.

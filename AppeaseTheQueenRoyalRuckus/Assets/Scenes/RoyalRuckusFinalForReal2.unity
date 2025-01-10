@@ -10733,7 +10733,7 @@ Transform:
   m_GameObject: {fileID: 286885308}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -205.29407, y: -27.848145, z: 27.744225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10755,7 +10755,7 @@ Transform:
   - {fileID: 877611053}
   - {fileID: 1840942212}
   - {fileID: 1529879061}
-  m_Father: {fileID: 1482630013}
+  m_Father: {fileID: 1040414251}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &303636035 stripped
 Transform:
@@ -22515,8 +22515,8 @@ GameObject:
   - component: {fileID: 1040414251}
   - component: {fileID: 1040414250}
   m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
+  m_Name: GameManagerRoot
+  m_TagString: MainLevelRoot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22563,6 +22563,12 @@ MonoBehaviour:
   gameOverScene: Menu
   subLevelPortals:
   - {fileID: 1529879056}
+  subLevelSceneNames:
+  - RoyalRuckusAltZone1
+  paddles:
+  - {fileID: 2078732228}
+  - {fileID: 2125727191}
+  paddleTransforms: []
 --- !u!4 &1040414251
 Transform:
   m_ObjectHideFlags: 0
@@ -22575,8 +22581,9 @@ Transform:
   m_LocalPosition: {x: 205.29407, y: 27.848145, z: -27.744225}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1482630013}
+  m_Children:
+  - {fileID: 286885309}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1045472509 stripped
 GameObject:
@@ -23641,39 +23648,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b1a291d1d9214b4ca9eb0574d81b4ec, type: 3}
---- !u!1 &1482630012
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1482630013}
-  m_Layer: 0
-  m_Name: MainSceneRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1482630013
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1482630012}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1040414251}
-  - {fileID: 286885309}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1529879056
 GameObject:
   m_ObjectHideFlags: 0
@@ -23793,7 +23767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalIndex: 0
-  levelName: RoyalRuckusAltZone1
+  myGameManager: {fileID: 1040414249}
 --- !u!1001 &1593577467
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25118,6 +25092,11 @@ Transform:
   - {fileID: 453529376}
   m_Father: {fileID: 1861985797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2078732228 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8383715164886855770, guid: 1b1a291d1d9214b4ca9eb0574d81b4ec, type: 3}
+  m_PrefabInstance: {fileID: 1414024081}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2088470812
 GameObject:
   m_ObjectHideFlags: 0
@@ -25227,6 +25206,11 @@ MeshFilter:
 Transform:
   m_CorrespondingSourceObject: {fileID: 7426069568402397868, guid: 3ac413a337d2ec44ba55c7aeb4dd45eb, type: 3}
   m_PrefabInstance: {fileID: 437139840}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2125727191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2238213120557406674, guid: 4e057db6032ee7148b53a0e4bf75a74e, type: 3}
+  m_PrefabInstance: {fileID: 160672051}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2143436694
 GameObject:
@@ -25835,4 +25819,4 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1482630013}
+  - {fileID: 1040414251}
