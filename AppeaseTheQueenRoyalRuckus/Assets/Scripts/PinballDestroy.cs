@@ -17,7 +17,7 @@ public class PinballDestroy : MonoBehaviour
     {
         
     }
-    void OnCollisionEnter(Collision other) {
+    void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.CompareTag("Pinball"))
         {
             Destroy(other.gameObject);

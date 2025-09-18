@@ -52,11 +52,11 @@ public class LauncherScript : MonoBehaviour
     public void launchPinball() {
         if(pinballLaunched == false) {
             createdPinball = Instantiate(pinball, instantiationLocation, Quaternion.identity);
-            createdPinball.GetComponent<Rigidbody>().AddForce(new Vector3(0, power, 0));
+            createdPinball.GetComponent<Rigidbody2D>().AddForce(new Vector3(0, power, 0));
             pinballLaunched = true;
         }
     }
-    public void OnCollisionEnter(Collision collided) {
+    public void OnCollisionEnter2D(Collision2D collided) {
         if(collided.gameObject.tag == "Pinball") {
             //print("Pinball Collision detected.\n");
             Destroy(collided.gameObject);

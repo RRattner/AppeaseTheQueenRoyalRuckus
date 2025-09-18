@@ -27,7 +27,7 @@ public class SoundAndScoreScript : MonoBehaviour
     {
     }
 
-    void OnCollisionEnter(Collision other) {
+    void OnCollision2DEnter(Collision2D other) {
         if(onCooldown) {
             print("On cooldown!\n");
             if(Time.time - collisionTriggerTime >= delayTime) {

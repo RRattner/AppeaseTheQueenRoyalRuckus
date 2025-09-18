@@ -21,7 +21,7 @@ public class LauncherDoorScript : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter(Collider collided) {
+    public void OnTriggerEnter2D(Collider2D collided) {
         if(collided.gameObject.tag == "Pinball" && !pinballInPlay) {
             shutLauncherDoor();
         }
