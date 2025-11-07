@@ -7,6 +7,7 @@ public class LocalPortalScript : MonoBehaviour
     [SerializeField] private GameObject exitPortal;
     [SerializeField] private bool exitPortalOneWay;
     [SerializeField] private float portalDeactivationTimer;
+    [SerializeField] private GameObject myCamera;
     public bool isTestPortal;
     private Rigidbody2D pinballRigidbody;
 
