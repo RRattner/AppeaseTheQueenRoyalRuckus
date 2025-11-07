@@ -5,6 +5,7 @@ using UnityEngine;
 public class LocalPortalScript : MonoBehaviour
 {
     [SerializeField] private GameObject exitPortal;
+    [SerializeField] private bool exitPortalOneWay;
     [SerializeField] private float portalDeactivationTimer;
     public bool isTestPortal;
     private Rigidbody2D pinballRigidbody;
@@ -38,8 +39,14 @@ public class LocalPortalScript : MonoBehaviour
             Transform newLocation = exitPortal.transform;
 
             pinballRigidbody = myPinball.GetComponent<Rigidbody2D>();
-
-            exitPortal.GetComponent<LocalPortalScript>().portalInactive();
+            if (!exitPortalOneWay)
+            {
+                exitPortal.GetComponent<LocalPortalScript>().portalInactive();
+            }
+            else
+            {
+                //Trigger animation of one-way portal opening and closing
+            }
             
 
             //myPinball.transform.position = exitPortal.transform.position;
