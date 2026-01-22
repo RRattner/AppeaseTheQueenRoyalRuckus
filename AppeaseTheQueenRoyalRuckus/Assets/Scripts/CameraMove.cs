@@ -3,7 +3,8 @@ using System.Collections.Generic;
 //using System.Numerics;
 using UnityEngine;
 
-public class CameraMove : MonoBehaviour {
+public class CameraMove : MonoBehaviour
+{
     //Camera method will be moving
     [SerializeField] private GameObject myCamera;
     //An array of game objects representing the points the camera will move to
@@ -16,6 +17,10 @@ public class CameraMove : MonoBehaviour {
     private float yMovement;
     //The amount of time it will take for the camera to move to the next location
     [SerializeField] private float cameraMoveTime;
+    //The amount of time to spend in the transition if the camera doesn't need to move.  Used to account for animations.
+    [SerializeField] private float transitionMoveTimeOnly;
+    //Stores the amount of time needed for the current move.
+    private float timeToMove;
     //The current location of the camera.
     private Vector2 currentCameraLoc;
     //The current destination point of the camera.  Updated whenever a move begins.
@@ -24,15 +29,21 @@ public class CameraMove : MonoBehaviour {
     private bool cameraMoveEngaged;
     // Start is called before the first frame update
     private float timeMoved;
-    void Start() {
-        if (myCameraPoints.Length != 0) {
+
+    [SerializeField] private int respawnCameraIndex;
+    void Start()
+    {
+        if (myCameraPoints.Length != 0)
+        {
             myCameraLocs = new Vector2[myCameraPoints.Length];
-            for (int i = 0; i < myCameraPoints.Length; i++) {
+            for (int i = 0; i < myCameraPoints.Length; i++)
+            {
                 myCameraLocs[i] = new Vector2(myCameraPoints[i].transform.position.x, myCameraPoints[i].transform.position.y);
             }
             currentCameraLoc = myCameraLocs[0];
         }
-        else {
+        else
+        {
             print("Error, camera locations not set.\n");
         }
         xMovement = 0;
@@ -40,19 +51,20 @@ public class CameraMove : MonoBehaviour {
         currentCameraDestination = currentCameraLoc;
         cameraMoveEngaged = false;
         timeMoved = 0;
+        timeToMove = cameraMoveTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (cameraMoveEngaged && timeMoved < cameraMoveTime)
+        if (cameraMoveEngaged && timeMoved < timeToMove)
         {
             float distToMoveX;
             float distToMoveY;
-            if (Time.deltaTime + timeMoved > cameraMoveTime)
+            if (Time.deltaTime + timeMoved > timeToMove)
             {
-                distToMoveX = xMovement * (cameraMoveTime - timeMoved);
-                distToMoveY = yMovement * (cameraMoveTime - timeMoved);
+                distToMoveX = xMovement * (timeToMove - timeMoved);
+                distToMoveY = yMovement * (timeToMove - timeMoved);
             }
             else
             {
@@ -61,7 +73,7 @@ public class CameraMove : MonoBehaviour {
             }
             timeMoved += Time.deltaTime;
             myCamera.transform.Translate(distToMoveX, distToMoveY, 0f);
-            if (timeMoved >= cameraMoveTime)
+            if (timeMoved >= timeToMove)
             {
                 cameraMoveEngaged = false;
                 timeMoved = 0;
@@ -80,17 +92,36 @@ public class CameraMove : MonoBehaviour {
         }
 
     }
-
-    public void moveCamera(int cameraPointIndex) {
-        if(!cameraMoveEngaged) {
-            float distToMoveX =  myCameraLocs[cameraPointIndex].x - currentCameraLoc.x;
+    public float cameraMoveDuration()
+    {
+        return timeToMove;
+    }
+    public void moveCamera(int cameraPointIndex)
+    {
+        if (!cameraMoveEngaged)
+        {
+            float distToMoveX = myCameraLocs[cameraPointIndex].x - currentCameraLoc.x;
             float distToMoveY = myCameraLocs[cameraPointIndex].y - currentCameraLoc.y;
-            if (distToMoveX != 0 || distToMoveY != 0) {
+            if (distToMoveX != 0 || distToMoveY != 0)
+            {
+                //The camera does need to move.
                 cameraMoveEngaged = true;
+                timeToMove = cameraMoveTime;
                 currentCameraDestination = myCameraLocs[cameraPointIndex];
-                xMovement = distToMoveX / cameraMoveTime;
-                yMovement = distToMoveY / cameraMoveTime;
+                xMovement = distToMoveX / timeToMove;
+                yMovement = distToMoveY / timeToMove;
             }
+            else
+            {
+                //The camera does not need to move.  Reduced transition time set accordingly.
+                timeToMove = transitionMoveTimeOnly;
+            }
+        }
+    }
+    public void moveToRespawnCamera()
+    {
+        if (currentCameraLoc != myCameraLocs[respawnCameraIndex]) {
+            moveCamera(respawnCameraIndex);
         }
     }
 }

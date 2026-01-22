@@ -8,10 +8,15 @@ public class LocalPortalScript : MonoBehaviour
     [SerializeField] private bool exitPortalOneWay;
     [SerializeField] private float portalDeactivationTimer;
     [SerializeField] private GameObject myCamera;
+    //The index of the camera that should be used after this portal is passed through.
+    [SerializeField] private int cameraIndex;
     public bool isTestPortal;
     private Rigidbody2D pinballRigidbody;
+    private Vector2 savedPinballVelocity;
 
     private float exitPortalInactiveTime;
+
+    private float pinballGravityScale;
 
     void Start()
     {
@@ -21,14 +26,21 @@ public class LocalPortalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /**if (exitPortalInactiveTime < Time.time)
-        {
-            exitPortal.SetActive(true);
-        }
-        if (isTestPortal)
-        {
-            print("Current coordinates to move to are: x:"+exitPortal.transform.position.x+", y: "+exitPortal.transform.position.y+"\n");
-        }**/
+
+    }
+    IEnumerator portalCameraMove(GameObject myPinball)
+    {
+        savedPinballVelocity = pinballRigidbody.velocity;
+        pinballGravityScale = myPinball.GetComponent<Rigidbody2D>().gravityScale;
+        pinballRigidbody.velocity = Vector2.zero;
+        pinballRigidbody.gravityScale = 0;
+        myPinball.transform.Translate(exitPortal.transform.position - myPinball.transform.position);
+        myCamera.GetComponent<CameraMove>().moveCamera(cameraIndex);
+        yield return new WaitForSeconds(myCamera.GetComponent<CameraMove>().cameraMoveDuration());
+        
+
+        pinballRigidbody.gravityScale = pinballGravityScale;
+        myPinball.GetComponent<Rigidbody2D>().velocity = savedPinballVelocity;
     }
 
     void OnTriggerEnter2D(Collider2D pinballCollider)
@@ -40,6 +52,8 @@ public class LocalPortalScript : MonoBehaviour
             Transform newLocation = exitPortal.transform;
 
             pinballRigidbody = myPinball.GetComponent<Rigidbody2D>();
+
+            //StartCoroutine(portalCameraMove(myPinball));
             if (!exitPortalOneWay)
             {
                 exitPortal.GetComponent<LocalPortalScript>().portalInactive();
@@ -48,14 +62,15 @@ public class LocalPortalScript : MonoBehaviour
             {
                 //Trigger animation of one-way portal opening and closing
             }
-            
+            StartCoroutine(portalCameraMove(myPinball));
 
             //myPinball.transform.position = exitPortal.transform.position;
-            myPinball.transform.Translate(exitPortal.transform.position - myPinball.transform.position);
+            
+
         }
     }
     private void portalInactive()
     {
-         exitPortalInactiveTime = Time.time + portalDeactivationTimer;
+        exitPortalInactiveTime = Time.time + portalDeactivationTimer;
     }
 }

@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool queen2Active;
     [SerializeField] private bool queen3Active;
 
+    [SerializeField] private GameObject myCamera;
+
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private string[] posStatements;
     [SerializeField] private string[] neutralStatements;
@@ -126,6 +128,7 @@ public class GameManager : MonoBehaviour
             Destroy(myGameDataTracker);
         }
         else {
+            myCamera.GetComponent<CameraMove>().moveToRespawnCamera();
             myLauncher.GetComponent<LauncherScript>().newAttempt();
             myLauncherDoor.GetComponent<LauncherDoorScript>().openLauncherDoor();
             myGameDataTracker.GetComponent<GameDataTracker>().updateAttempts(numAttempts);
