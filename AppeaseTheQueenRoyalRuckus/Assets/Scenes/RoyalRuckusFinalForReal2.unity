@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -221,7 +220,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 39130738}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2217fc28d2b1e404caaa25e2ce4cea4e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -10951,6 +10950,7 @@ GameObject:
   - component: {fileID: 208645617}
   - component: {fileID: 208645616}
   - component: {fileID: 208645615}
+  - component: {fileID: 208645618}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -11032,6 +11032,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 286885309}
   m_LocalEulerAnglesHint: {x: 2.967, y: 0, z: 0}
+--- !u!114 &208645618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208645614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44fc459fd5be987448726a3a8b66d23f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCamera: {fileID: 208645614}
+  myCameraPoints:
+  - {fileID: 208645614}
+  cameraMoveTime: 0
+  transitionMoveTimeOnly: 0
+  respawnCameraIndex: 0
 --- !u!1 &276193700
 GameObject:
   m_ObjectHideFlags: 0
@@ -12045,7 +12063,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 495460035}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2217fc28d2b1e404caaa25e2ce4cea4e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -24172,6 +24190,7 @@ MonoBehaviour:
   queen1Active: 1
   queen2Active: 0
   queen3Active: 0
+  myCamera: {fileID: 208645614}
   dialogueBox: {fileID: 1562071189}
   posStatements:
   - "Well someone isn\u2019t a total waste of space."
@@ -28165,7 +28184,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2088470812}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2217fc28d2b1e404caaa25e2ce4cea4e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -28337,7 +28356,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 2143436694}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2217fc28d2b1e404caaa25e2ce4cea4e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
