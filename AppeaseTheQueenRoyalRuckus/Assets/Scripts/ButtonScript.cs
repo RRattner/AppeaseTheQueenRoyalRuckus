@@ -22,7 +22,7 @@ public class ButtonScript : MonoBehaviour
     // Update is called once per frame
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Pinball") {
+        if(collision.gameObject.CompareTag("Pinball")) {
             print("Collision detected!\n");
             float curTime = Time.time;
             if ((curTime - lastButtonHitTime) >= inactiveTimer)
